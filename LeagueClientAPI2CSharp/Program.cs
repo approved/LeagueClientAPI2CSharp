@@ -23,6 +23,7 @@ namespace LCAPI2CSharp
         private static readonly HttpClient ComClient = new HttpClient(ComHandler);
 
         private static bool SelfLaunched = false;
+        private static bool CleanedUp = false;
 
         private static async Task Main(string[] args)
         {
@@ -93,6 +94,7 @@ namespace LCAPI2CSharp
 
             Console.WriteLine("Press enter to exit...");
             Console.ReadLine();
+            Cleanup();
         }
 
         private static bool HasClientPath()
@@ -197,12 +199,19 @@ namespace LCAPI2CSharp
 
         private static void Cleanup(bool onExit = false)
         {
+            if (CleanedUp)
+            {
+                return;
+            }
+
             if (SelfLaunched)
             {
                 ClientProcess?.Kill();
             }
 
             File.Move(RiotServicePath, Path.Combine(Path.GetDirectoryName(RiotServicePath), "RiotClientServices.exe"));
+
+            CleanedUp = true;
 
             if (!onExit)
             {
