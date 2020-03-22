@@ -53,8 +53,10 @@ namespace LCAPI2CSharp
 
             try
             {
-                File.Move(RiotServicePath, Path.Combine(Path.GetDirectoryName(RiotServicePath), "_RiotClientServices.exe"));
-                RiotServicePath = Path.Combine(Path.GetDirectoryName(RiotServicePath), "_RiotClientServices.exe");
+                string newPath = Path.Combine(Path.GetDirectoryName(RiotServicePath), "_RiotClientServices.exe");
+
+                File.Move(RiotServicePath, newPath);
+                RiotServicePath = newPath;
             }
             catch
             {
@@ -89,7 +91,6 @@ namespace LCAPI2CSharp
             }
             else if (response.StatusCode == HttpStatusCode.NotFound)
             {
-                Console.WriteLine("Swagger not enabled. Please close all instances of the LeagueClient and RiotClient. Then launch this program again");
             }
 
             Console.WriteLine("Press enter to exit...");
