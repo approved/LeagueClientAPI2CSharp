@@ -14,7 +14,7 @@ namespace LCAPI2CSharp
 
         private LeagueClientInfo() { }
 
-        public static LeagueClientInfo FromFile (FileInfo file)
+        public static LeagueClientInfo FromFile(FileInfo file)
         {
             if (!file.Exists)
             {
@@ -22,7 +22,7 @@ namespace LCAPI2CSharp
             }
 
             string fileData = string.Empty;
-            using(FileStream fs = File.Open(file.FullName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            using (FileStream fs = File.Open(file.FullName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
                 byte[] buffer = new byte[fs.Length];
                 fs.Read(buffer, 0, (int)fs.Length);
@@ -33,8 +33,8 @@ namespace LCAPI2CSharp
         }
 
         public static LeagueClientInfo FromString(string data)
-        { 
-            if(string.IsNullOrEmpty(data))
+        {
+            if (string.IsNullOrEmpty(data))
             {
                 throw new ArgumentException($"{nameof(data)} was {(data is null ? "null" : "empty")}.");
             }

@@ -30,7 +30,7 @@ namespace LCAPI2CSharp
             AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
 
             string programDataPath = Environment.GetEnvironmentVariable("programdata") ?? string.Empty;
-            if(string.IsNullOrEmpty(programDataPath))
+            if (string.IsNullOrEmpty(programDataPath))
             {
                 throw new Exception("Could not find program data. Please try again.");
             }
@@ -41,9 +41,9 @@ namespace LCAPI2CSharp
                 string installsPath = Path.Combine(riotGamesDataFolder, "RiotClientInstalls.Json");
                 if (File.Exists(installsPath))
                 {
-                    foreach(string line in File.ReadAllLines(installsPath))
+                    foreach (string line in File.ReadAllLines(installsPath))
                     {
-                        if(line.Contains("rc_live"))
+                        if (line.Contains("rc_live"))
                         {
                             RiotServicePath = line.Substring(line.IndexOf(":") + 1).Replace("\"", "").Trim();
                         }
@@ -81,13 +81,13 @@ namespace LCAPI2CSharp
                 Console.WriteLine(swaggerData);
 
                 response = await ComClient.GetAsync($"{lci.ComProtocol}://127.0.0.1:{lci.ProcessPort}/Help?format=Full", HttpCompletionOption.ResponseContentRead);
-                if(response.StatusCode == HttpStatusCode.OK)
+                if (response.StatusCode == HttpStatusCode.OK)
                 {
                     string helpData = await response.Content.ReadAsStringAsync();
                     Console.WriteLine(helpData);
                 }
             }
-            else if(response.StatusCode == HttpStatusCode.NotFound)
+            else if (response.StatusCode == HttpStatusCode.NotFound)
             {
                 Console.WriteLine("Swagger not enabled. Please close all instances of the LeagueClient and RiotClient. Then launch this program again");
             }
@@ -152,8 +152,7 @@ namespace LCAPI2CSharp
                     using (FileStream sysCopy = File.Create(localYaml))
                     using (TextWriter tw = new StreamWriter(sysCopy))
                     {
-                        long length = sys.Length;
-                        while (sys.Position < length)
+                        while (sys.Position < sys.Length)
                         {
                             string line = trSys.ReadLine() ?? string.Empty;
 
