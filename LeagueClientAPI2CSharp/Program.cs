@@ -25,6 +25,8 @@ namespace LCAPI2CSharp
         private static bool SelfLaunched = false;
         private static bool CleanedUp = false;
 
+        private const string ErrorCloseAndRelaunch = "Please close all instances of the LeagueClient and RiotClient. Then launch this program again.";
+
         private static async Task Main(string[] args)
         {
             AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
@@ -91,6 +93,11 @@ namespace LCAPI2CSharp
             }
             else if (response.StatusCode == HttpStatusCode.NotFound)
             {
+                Console.WriteLine($"Swagger not enabled. {ErrorCloseAndRelaunch}");
+            }
+            else
+            {
+                Console.WriteLine($"Unexpected error. {ErrorCloseAndRelaunch}");
             }
 
             Console.WriteLine("Press enter to exit...");
